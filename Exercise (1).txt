@@ -1,0 +1,169 @@
+// Exercise (1)
+task1
+CREATE TABEL Authors (
+Authors_id  int PRIMARY KEY,
+Authors_name VARCHAR(15)
+);
+CREATE TABEL Books (
+book_id int PRIMARY KEY,
+author_id,
+FOREIGN KEY (author_id) REFERENCES Authors(author_id)
+
+);
+
+task2
+CREATE TABLE Customers(
+customer_id INT PRIMARY KEY,
+customer_name VARCHAR(50)
+);
+
+CREATE TABLE Products(
+product_id INT PRIMARY KEY,
+product_name VARCHAR(50)
+);
+
+CREATE TABLE Orders(
+order_id INT PRIMARY KEY,
+order_name VARCHAR(50) 
+);
+CREATE TABLE OrderDetails (
+    order_id INT,
+    product_id INT,
+    quantity INT NOT NULL,
+    PRIMARY KEY (order_id, product_id),
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+
+task3
+
+Primary Key :uniquely identifies each row in a table ,Cannot contain NULLs.
+Unique :Can have multiple unique constraints in a table,Prevents duplicate values in the column
+
+
+
+//Task & Exercise (2)
+*task1
+
+*task2
+Partial Dependency:
+accurce when attribute in a table depend only part of the composite primary key, rather than the whole key
+
+Transitive Dependency:
+occurs when a non-key attribute depends on another non-key attribute
+
+//Task & Exercise (3)
+
+CREATE TABEL student(
+  std_id INT PRIMARY KEY,
+    std_Name VARCHAR(50),
+    std_BOfD DATE,
+    std_email VARCHAR(50)
+);
+//1
+INSERT INTO student (std_id,std_Name, std_BOfD, std_email)
+VALUES 
+    (1, 'saja', 2003, 'saja@example.com'),
+    (2, 'Sara', 2005, 'sara@example.com'),
+    (3, 'rana', 2006, 'rana@example.com');
+//2
+SELECT *
+FROM student
+WHERE std_BOfD > 2000
+ORDER BY name ASC;
+//3
+UPDATE student
+SET email = 'saja.new@example.com'
+WHERE st_id = 2;
+//
+DELETE FROM student
+WHERE std_id = 3;
+
+//Task & Exercise (4)
+CREATE TABLE Users (
+    user_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    city VARCHAR(50),
+    email VARCHAR(50) UNIQUE
+);
+
+CREATE TABLE Orders (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    order_amount DECIMAL(10,2),
+    order_date DATE,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+CREATE TABLE NewsletterSubscribers (
+    subscriber_id INT PRIMARY KEY,
+    email VARCHAR(50) UNIQUE
+);
+INSERT INTO Users (user_id, name, city, email) VALUES
+(1, 'saja', 'Amman', 'saja@example.com'),
+(2, 'Omar', 'Amman', 'omar@example.com'),
+(3, 'Lina', 'Zarqa', 'lina@example.com'),
+(4, 'Rana', 'Irbid', 'rana@example.com');
+
+INSERT INTO Orders (order_id, user_id, order_amount, order_date) VALUES
+(101, 1, 120.00, '2025-01-10'),
+(102, 2, 30, '2025-02-15');
+
+INSERT INTO NewsletterSubscribers (subscriber_id, email) VALUES
+(1, 'ali@example.com'),
+(2, 'mona@example.com'),
+(3, 'newuser@example.com');
+
+
+SELECT city, COUNT(*) AS user_count
+FROM Users
+GROUP BY city
+HAVING COUNT(*) > 5;
+
+SELECT u.user_id, u.name, u.city, u.email
+FROM Users u
+LEFT JOIN Orders o ON u.user_id = o.user_id
+WHERE o.order_id IS NULL;
+
+SELECT u.user_id, u.name, AVG(o.order_amount) AS avg_order_amount
+FROM Users u
+JOIN Orders o ON u.user_id = o.user_id
+GROUP BY u.user_id, u.name;
+
+
+
+
+SELECT email
+FROM NewsletterSubscribers
+UNION
+SELECT email
+FROM Users;
+
+
+
+
+
+
+
+//Task & Exercise (5)
+
+
+Data: Row data ,any data is not meaning or not procced
+
+
+Information: data is procced or, data that meaning after meaning
+
+Database: collection of structured information (data) that allows for efficient storage
+
+
+DBMS: system or software allow to create manage of data
+
+RDBMS:Software that mange relation database
+
+
+University System:
+
+A university uses a database to store information about students, doctors, courses, classes, and grades.
+Each student has a unique ID number, major, and department stored in the database.
+Doctors use the database to enter grades and attendance for each class.
+The university administration uses the database to manage academic records and generate reports.
