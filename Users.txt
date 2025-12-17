@@ -1,0 +1,109 @@
+//Users
+CREATE TABLE users(
+users_id int PRIMARY KEY,
+users_Name VARCHAR(20) NOT NULL,
+users_password VARCHAR(20) NOT NULL,
+users_phoneNumber VARCHAR(10) NOT NULL,
+users_email VARCHAR(200) UNIQUE   
+);
+
+
+
+//product
+CREATE TABLE products(
+product_id INT PRIMARY KEY,
+    product_name VARCHAR(20) NOT NULL,
+    product_price int NOT NULL
+    );
+
+
+//Orders
+CREATE TABLE orders(
+orders_id int PRIMARY KEY,
+orders_total_amount DECIMAL(10,2),
+users_id int ,
+FOREIGN KEY(users_id) REFERENCES users (users_id)
+    );
+
+
+//order_items
+CREATE TABLE order_items(
+OrderItemID int PRIMARY KEY,
+orders_id int,
+product_id int,
+Quantity int NOT NULL,
+ItemPrice int NOT NULL,
+FOREIGN KEY (orders_id) REFERENCES orders(orders_id),
+FOREIGN KEY ( product_id ) REFERENCES products(product_id)   
+);
+    
+CREATE TABLE Categories(
+    Categorie_id int PRIMARY KEY,
+    Categorie_name VARCHAR(30),
+    description VARCHAR(30)
+    );
+
+
+
+//insert
+INSERT INTO `users`( `users_Name`, `users_password`, `users_phoneNumber`, `users_email`) VALUES ('Saja Yaseen',123456,'0788680941','Saja@gmail.com')
+
+INSERT INTO `users`( `users_Name`, `users_password`, `users_phoneNumber`, `users_email`) VALUES ('Rana Yaseen',1234,'0788681944','Rana@gmail.com')
+
+INSERT INTO `users`( `users_Name`, `users_password`, `users_phoneNumber`, `users_email`) VALUES ('Lina Omar',pass9876,'0798765432','@gmail.com')
+
+
+INSERT INTO products(product_name,product_price)
+VALUES("Char",10), ('Laptop', 1200.00);
+
+INSERT INTO orders(orders_id,orders_total_amount,users_id)
+VALUES(2,200,1)
+INSERT INTO `orders`( `orders_total_amount`, `users_id`) VALUES ('300','3');
+
+INSERT INTO categories( `Categorie_name`, `description`) VALUES ('Clothes','t-chert');
+INSERT INTO `categories`( `Categorie_name`, `description`) VALUES (electronic,Labtob);
+
+ //updata
+UPDATE `users`
+SET `users_Name`='Saja Alqaddome',
+    `users_password`='passSaja2003@kh'
+WHERE `users_id` = 1;
+
+
+//delete
+DELETE FROM `orders` WHERE orders_id=1;
+
+
+//quere
+SELECT * FROM products;
+
+SELECT * FROM users;
+
+
+SELECT 
+    orders.orders_id,
+ orders.orders_total_amount,
+    users.users_id,
+    users.users_Name
+FROM orders
+JOIN users ON orders.users_id = users.users_id;
+
+
+SELECT * FROM orders
+WHERE users_id = 1;
+
+SELECT * FROM users
+ORDER BY users.users_Name DESC;
+
+
+SELECT * FROM users
+LIMIT 2;  
+
+SELECT 
+    COUNT(orders_id) AS orders_total_amount
+FROM orders;
+
+
+
+SELECT SUM(orders_total_amount) AS total_orders_amount
+FROM orders;
